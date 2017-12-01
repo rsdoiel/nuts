@@ -5,6 +5,10 @@
 
 ## Next
 
++ [ ] review gocui, github.com/jroimartin/gocui
+    + looks simple, not sure how to bind alt keys (e.g. AltQ)
++ [ ] review tui-go, github.com/marcusolsson/tui-go
+    + the event bindings look reasonably complete, including Alt
 + [ ] review evaluator (s-expressions), github.com/nline/evaluator
 
 
@@ -42,10 +46,8 @@
 ### Search Engines and K/V stores
 
 + [ ] riot, search/indexing, github.com/go-ego/riot
-+ [ ] 
 
 ### CUIs and GUIs
 
 + [ ] review termui, github.com/gizak/termui
-+ [ ] review tui-go, github.com/marcusolsson/tui-go
 + [ ] webview, github.com/zserge/webview
