@@ -39,7 +39,7 @@ findfile -s ".md" . | while read P; do
         HTML_NAME=$(echo "$P" | sed -E 's/.md$/.html/g')
         ;;
     esac
-    if [ "${DNAME:0:4}" != "dist" ] && [ "${FNAME}" != "nav.md" ]; then
+    if [[ "${DNAME:0:4}" != "dist" && "${DNAME:0:4}" != "test" && "${FNAME}" != "nav.md" ]]; then
         NAV=$(FindNavMD "$DNAME")
         echo "Building $HTML_NAME from $DNAME/$FNAME and $NAV"
         mkpage "nav=$NAV" "content=${DNAME}/${FNAME}" page.tmpl >"${HTML_NAME}"
