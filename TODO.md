@@ -5,14 +5,23 @@
 
 ## Next
 
+## Someday, Maybe
+
+# Research
+
+## Data
+
++ [ ] prototype dataset collection managing Markdown docs
+    + [ ] collection metadata a json doc
+    + [ ] each md doc and its metadata as json doc
+
+## UI 
+
 + [ ] review gocui, github.com/jroimartin/gocui
     + looks simple, not sure how to bind alt keys (e.g. AltQ)
 + [ ] review tui-go, github.com/marcusolsson/tui-go
     + the event bindings look reasonably complete, including Alt
 + [ ] review evaluator (s-expressions), github.com/nline/evaluator
-
-
-## Someday, Maybe
 
 ### http middleware
 
