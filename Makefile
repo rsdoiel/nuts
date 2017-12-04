@@ -25,7 +25,8 @@ test:
 	go test
 
 website:
-	./mk-website.bash
+	bash gen-nav.bash
+	bash mk-website.bash
 
 status:
 	git status
@@ -39,8 +40,9 @@ refresh:
 	git pull origin $(BRANCH)
 
 publish:
-	./mk-website.bash
-	./publish.bash
+	bash gen-nav.bash
+	bash mk-website.bash
+	bash publish.bash
 
 clean: 
 	if [ -d bin ]; then rm -fR bin; fi
