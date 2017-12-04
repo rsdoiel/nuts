@@ -1,14 +1,15 @@
-{{- define $relroot (dotpath .relroot "") -}}
+{{- $relroot := .relroot -}}
 + [Home](/)
-+ [README]({{- $relroot -}})
-{{- with .documentation }}+ [Documentation]({{- $relroot -}}{{- . -}}){{- end }}
-{{- with .installation }}+ [Installation]({{- $relroot -}}{{- . -}}){{- end }}
-{{- with .gitrepo }}+ [Github]({{- . -}}){{- end }}
-{{- else }}
++ [README]({{- $relroot -}}index.html)
+{{- with .docs }}
++ [Documentation]({{- $relroot -}}{{- . -}}){{- end }}
+{{- with .install }}
++ [Installation]({{- $relroot -}}{{- . -}}){{- end }}
+{{- with .gitrepo }}
++ [Github]({{- . -}}){{- end }}
 {{- range .fnames }}
-+ [{{- english_title (unslug (base .)) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}}
++ [{{- english_title (unslug (base .)) -}}]({{- $relroot -}}{{- . -}}
 {{- end }}
 {{- range .dnames }}
-+ [{{- english_title (unslug . ) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}})
-{{- end }}
++ [{{- english_title (unslug (base .) "./") -}}]({{- $relroot -}}{{- . -}})
 {{- end }}
