@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{- .title -}}</title>
+    {{ with .title }}<title>{{- . -}}</title>{{- end }}
     <link href="/css/site.css" rel="stylesheet" />
 </head>
 <body>
