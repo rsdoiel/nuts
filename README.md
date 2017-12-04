@@ -5,5 +5,5 @@
 
 ## peanut
 
-An experimental cui for fruits and seeds.
+An experimental with fruits and seeds.
 
