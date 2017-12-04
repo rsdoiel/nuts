@@ -6,9 +6,9 @@
 {{- with .gitrepo }}+ [Github]({{- . -}}){{- end }}
 {{- else }}
 {{- range .fnames }}
-+ [{{- englishTitle (unslug (basename .)) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}}
++ [{{- english_title (unslug (base .)) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}}
 {{- end }}
 {{- range .dnames }}
-+ [{{- englishTitle (unslug . ) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}})
++ [{{- english_title (unslug . ) -}}]({{ dotpath $relroot "" -}}{{- dotpath . "" -}})
 {{- end }}
 {{- end }}
