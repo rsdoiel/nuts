@@ -20,6 +20,10 @@ function FindNavMD() {
 cleanUpHTML
 
 # Look through files and build new site
+TITLE=""
+if [[ "${1}" != "" ]]; then
+    TITLE="${1}"
+fi
 mkpage "nav=nav.md" "content=markdown:$(cat LICENSE)" page.tmpl > license.html
 findfile -s ".md" . | while read P; do
     DNAME=$(dirname "$P")
@@ -42,7 +46,7 @@ findfile -s ".md" . | while read P; do
     if [[ "${DNAME:0:4}" != "dist" && "${DNAME:0:4}" != "test" && "${FNAME}" != "nav.md" ]]; then
         NAV=$(FindNavMD "$DNAME")
         echo "Building $HTML_NAME from $DNAME/$FNAME and $NAV"
-        mkpage "nav=$NAV" "content=${DNAME}/${FNAME}" page.tmpl >"${HTML_NAME}"
+        mkpage "title=text:${TITLE}" "nav=${NAV}" "content=${DNAME}/${FNAME}" page.tmpl >"${HTML_NAME}"
         git add "${HTML_NAME}"
     else
         echo "Skipping $P"

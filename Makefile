@@ -26,7 +26,12 @@ test:
 
 website:
 	bash gen-nav.bash
-	bash mk-website.bash
+	bash mk-website.bash $(PROJECT)
+
+publish:
+	bash gen-nav.bash
+	bash mk-website.bash $(PROJECT)
+	bash publish.bash
 
 status:
 	git status
@@ -38,11 +43,6 @@ save:
 refresh:
 	git fetch origin
 	git pull origin $(BRANCH)
-
-publish:
-	bash gen-nav.bash
-	bash mk-website.bash
-	bash publish.bash
 
 clean: 
 	if [ -d bin ]; then rm -fR bin; fi
