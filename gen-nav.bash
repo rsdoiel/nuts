@@ -1,21 +1,23 @@
 #!/bin/bash
 
-# root nav
-echo "Writing nav.md"
-mkpage nav.tmpl relroot="text:" \
-    install="text:install.html" \
-    docs="text:docs/peanut/" \
-    gitrepo="text:https://github.com/rsdoiel/nuts" \
-    >"nav.md"
+GIT_REPO="https://github.com/rsdoiel/nuts"
 
+# root folder
 # docs
-# docs/peanuts
-for D in "docs/" "docs/peanut/"; do
-    echo "Writing ${D}nav.md"
-    RELPATH=$(reldocpath "${D}" .)
-    mkpage nav.tmpl relroot="text:${RELPATH}" \
-    install="text:install.html" \
-    docs="text:docs/peanuts/" \
-    gitrepo="text:https://github.com/rsdoiel/nuts" \
-    >"${D}nav.md"
+# how to
+for D in "" "docs/" "how-to/"; do
+		echo "Writing ${D}nav.md"
+        if [[ "$D" = "" ]]; then
+RELPATH=""
+else
+		RELPATH=$(reldocpath "${D}" .)
+    fi
+		mkpage nav.tmpl relroot="text:${RELPATH}" \
+			readme="text:index.html" \
+			license="text:license.html" \
+			install="text:install.html" \
+			docs="text:docs/" \
+			howto="text:how-to/" \
+			gitrepo="text:${GIT_REPO}" \
+			>"${D}nav.md"
 done
