@@ -2,15 +2,13 @@
 
 GIT_REPO="https://github.com/rsdoiel/nuts"
 
-# root folder
-# docs
-# how to
-for D in "" "docs/" "how-to/"; do
-	echo "Writing ${D}nav.md"
-	if [[ "$D" == "" ]]; then
+function write_nav() {
+	D=$(dirname "$1")
+	echo "Writing ${D}/nav.md"
+	if [[ "$D" == "." ]]; then
 		RELPATH=""
 	else
-		RELPATH=$(reldocpath "${D}" .)
+		RELPATH=$(reldocpath "${D}/" .)
 	fi
 	mkpage nav.tmpl relroot="text:${RELPATH}" \
 		readme="text:index.html" \
@@ -19,5 +17,12 @@ for D in "" "docs/" "how-to/"; do
 		docs="text:docs/" \
 		howto="text:how-to/" \
 		gitrepo="text:${GIT_REPO}" \
-		>"${D}nav.md"
+		>"${D}/nav.md"
+}
+
+# root folder
+write_nav README.md
+# docs/ and how-to/
+findfile -c index.md | while read FNAME; do
+	write_nav "$FNAME"
 done
