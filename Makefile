@@ -15,11 +15,14 @@ ifeq ($(OS), Windows)
 endif
 
 
-build$(EXT): bin/peanut$(EXT) 
+build$(EXT): bin/peanut$(EXT) bin/cashew$(EXT)
 
 
 bin/peanut$(EXT): nuts.go cmd/peanut/main.go
 	go build -o bin/peanut$(EXT) cmd/peanut/main.go 
+
+bin/cashew$(EXT): nuts.go cmd/cashew/main.go
+	go build -o bin/cashew$(EXT) cmd/cashew/main.go 
 
 test:
 	go test
