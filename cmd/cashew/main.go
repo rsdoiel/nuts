@@ -3,20 +3,22 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
+	"strings"
 
 	// 3rd Party packages
 	"github.com/marcusolsson/tui-go"
 )
 
 func main() {
-	quitButton := tui.NewButton("Quit")
+	args := os.Args[:]
+	args[0] = path.Base(os.Args[0])
+
 	box := tui.NewVBox(
-		tui.NewLabel("nuts-cashew"),
-		quitButton,
+		tui.NewLabel(strings.Join(args, " ")),
 	)
 	ui := tui.New(box)
 	ui.SetKeybinding("Esc", func() { ui.Quit() })
-	quitButton.OnActivated(func(b *tui.Button) { ui.Quit() })
 	if err := ui.Run(); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 	}
