@@ -49,9 +49,9 @@ func (t *Text) Read(p []byte) (int, error) {
 	}
 	n := 0
 	//NOTE: we start reading from Cursor
-	for i := t.Cursor; i < sizeP && i < sizeSrc; i++ {
-		p[i] = t.Source[i]
-		t.Cursor = i
+	for i := int64(0); i < sizeP && t.Cursor < sizeSrc; i++ {
+		p[i] = t.Source[t.Cursor]
+		t.Cursor++
 		n++
 	}
 	return n, nil
