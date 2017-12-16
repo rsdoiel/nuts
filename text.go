@@ -10,11 +10,14 @@ import (
 )
 
 const (
-	// TextPlain describes something of type text/plain
-	TextPlain = iota
-	TextFDX
-	TextMarkdown
-	TextFountain
+	// Plain describes a text/plain document
+	Plain = iota
+	// FDX a Final Draft XML document
+	FDX
+	// Markdown document
+	Markdown
+	// Fountain document
+	Fountain
 )
 
 type Document struct {
@@ -22,13 +25,17 @@ type Document struct {
 	Name string
 	// Type is an integer value representing one of the text types supported (e.g. TextPlain).
 	Type int
-	// Metadata is a map to any additional data associated with the text, e.g. File Info, DOI content, etc.
+	// Meta is a map to any additional data associated with the text, e.g. File Info, DOI content, etc.
 	Meta map[string]interface{}
 	// Cursor holds the document level cursor (byte count into document)
 	Cursor int64
-	// Source holds and ordered list of Block
+	// Source holds an ordered list of Block pointers
 	Source []*Block
 }
+
+//FIXME: need a way to move from a document cursor to block number and block cursor
+
+//FIXME: need something to hold an undo queue
 
 // Block is a structure for holding text content you
 // want to process. The goal is to have a foundation
@@ -44,13 +51,17 @@ type Block struct {
 	Cursor int64
 }
 
+func len64(o []interface{}) int64 {
+	return int64(len(o))
+}
+
 //NOTE: Block holds content in memory. It implements io.Reader and io.Writer
 //interfaces so it will be easily combined with the standard Go packages.
 
 // Read copies b.Source into byte slice p up to the size of p
 func (b *Block) Read(p []byte) (int, error) {
-	sizeP := int64(len(p))
-	sizeSrc := int64(len(b.Source))
+	sizeP := len64(p)
+	sizeSrc := len64(b.Source)
 	if b.Cursor == sizeSrc {
 		return 0, io.EOF
 	}
@@ -66,8 +77,8 @@ func (b *Block) Read(p []byte) (int, error) {
 
 // Write copies the content of p and appends it to b.Source
 func (b *Block) Write(p []byte) (int, error) {
-	sizeP := int64(len(p))
-	sizeSrc := int64(len(b.Source))
+	sizeP := len64(p)
+	sizeSrc := len64(b.Source)
 	n := 0
 	i := int64(0)
 	// Overwrite our b.Source starting at b.Cursor until we need to
