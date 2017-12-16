@@ -6,7 +6,7 @@ import (
 )
 
 func TestReader(t *testing.T) {
-	txt := new(Text)
+	txt := new(Block)
 	txt.Source = []byte("Hello World!!!!!")
 	p := make([]byte, 5)
 	n, err := txt.Read(p)
@@ -25,7 +25,7 @@ func TestWriter(t *testing.T) {
 		[]byte("This is a new World!!!!!!"),
 		[]byte("Hope things get better!!!!!!"),
 	}
-	txt := new(Text)
+	txt := new(Block)
 	for i, p := range testPhrases {
 		sizeSrc := len(txt.Source)
 		sizeP := len(p)
@@ -37,7 +37,7 @@ func TestWriter(t *testing.T) {
 }
 
 func TestSeeker(t *testing.T) {
-	txt := new(Text)
+	txt := new(Block)
 	txt.Source = []byte(`This is the way the world ends
 This is the way the world ends
 This is the way the world ends
