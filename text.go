@@ -20,6 +20,13 @@ const (
 	Fountain
 )
 
+// Formatter is an interface that can return a string reprentation
+// and a byte array representation of one or more blocks
+type Formatter interface {
+	String() string
+	Render() ([]byte, error)
+}
+
 type Document struct {
 	// Name holds a human friendly name as a label
 	Name string
