@@ -24,7 +24,8 @@ const (
 // and a byte array representation of one or more blocks
 type Formatter interface {
 	String() string
-	Render() ([]byte, error)
+	Parse([]byte) (*Block, error)
+	Render(io.Writer, *Block) error
 }
 
 type Document struct {
