@@ -1,7 +1,7 @@
 //
-// peanut - an experiment in cui fruits and seeds
+// peanut - an experiment in tui (Text User Interface) fruits and seeds
 //
-// Copyright (c) 2017, R. S. Doiel
+// Copyright (c) 2018, R. S. Doiel
 // All rights not granted herein are expressly reserved by R. S. Doiel.
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -28,6 +28,8 @@ import (
 
 	// 3rd Party Packages
 	"github.com/jroimartin/gocui"
+	//"github.com/gdamore/tcell"
+	//"github.com/rivo/tview"
 )
 
 var (
