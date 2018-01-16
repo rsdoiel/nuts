@@ -18,11 +18,11 @@ endif
 build$(EXT): bin/peanut$(EXT) bin/cashew$(EXT)
 
 
-bin/peanut$(EXT): nuts.go cmd/peanut/main.go
-	go build -o bin/peanut$(EXT) cmd/peanut/main.go 
+bin/peanut$(EXT): nuts.go cmd/peanut/peanut.go
+	go build -o bin/peanut$(EXT) cmd/peanut/peanut.go 
 
-bin/cashew$(EXT): nuts.go cmd/cashew/main.go
-	go build -o bin/cashew$(EXT) cmd/cashew/main.go 
+bin/cashew$(EXT): nuts.go cmd/cashew/cashew.go
+	go build -o bin/cashew$(EXT) cmd/cashew/cashew.go 
 
 test:
 	go test
@@ -53,7 +53,7 @@ clean:
 
 
 install:
-	env GOBIN=$(GOPATH)/bin go install cmd/peanut/main.go
+	env GOBIN=$(GOPATH)/bin go install cmd/peanut/peanut.go
 
 
 uninstall:
@@ -62,35 +62,35 @@ uninstall:
 
 dist/linux-amd64:
 	mkdir -p dist/bin
-	env  GOOS=linux GOARCH=amd64 go build -o dist/bin/peanut cmd/peanut/main.go
+	env  GOOS=linux GOARCH=amd64 go build -o dist/bin/peanut cmd/peanut/peanut.go
 	cd dist && zip -r $(PROJECT)-$(VERSION)-linux-amd64.zip README.md LICENSE INSTALL.md bin/* docs/* how-to/* demos/*
 	rm -fR dist/bin
 
 
 dist/macosx-amd64:
 	mkdir -p dist/bin
-	env  GOOS=darwin GOARCH=amd64 go build -o dist/bin/peanut cmd/peanut/main.go
+	env  GOOS=darwin GOARCH=amd64 go build -o dist/bin/peanut cmd/peanut/peanut.go
 	cd dist && zip -r $(PROJECT)-$(VERSION)-macosx-amd64.zip README.md LICENSE INSTALL.md bin/* docs/* how-to/* demos/*
 	rm -fR dist/bin
 	
 
 dist/windows-amd64:
 	mkdir -p dist/bin
-	env  GOOS=windows GOARCH=amd64 go build -o dist/bin/peanut.exe cmd/peanut/main.go
+	env  GOOS=windows GOARCH=amd64 go build -o dist/bin/peanut.exe cmd/peanut/peanut.go
 	cd dist && zip -r $(PROJECT)-$(VERSION)-windows-amd64.zip README.md LICENSE INSTALL.md bin/* docs/* how-to/* demos/*
 	rm -fR dist/bin
 
 
 dist/raspbian-arm7:
 	mkdir -p dist/bin
-	env  GOOS=linux GOARCH=arm GOARM=7 go build -o dist/bin/peanut cmd/peanut/main.go
+	env  GOOS=linux GOARCH=arm GOARM=7 go build -o dist/bin/peanut cmd/peanut/peanut.go
 	cd dist && zip -r $(PROJECT)-$(VERSION)-raspbian-arm7.zip README.md LICENSE INSTALL.md bin/* docs/* how-to/* demos/*
 	rm -fR dist/bin
 
 
 dist/linux-arm64:
 	mkdir -p dist/bin
-	env GOOS=linux GOARCH=arm64 go build -o dist/bin/peanut cmd/peanut/main.go
+	env GOOS=linux GOARCH=arm64 go build -o dist/bin/peanut cmd/peanut/peanut.go
 	cd dist && zip -r $(PROJECT)-$(VERSION)-linux-arm64.zip README.md LICENSE INSTSALL.md bin/*
 	rm -fR dist/bin
 
