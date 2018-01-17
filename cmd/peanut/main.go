@@ -48,11 +48,12 @@ var (
 
 func rootLayout(ui *gocui.Gui) error {
 	maxX, maxY := ui.Size()
-	if view, err := ui.SetView("Oh nuts!", (maxX/2)-20, maxY/2, (maxX/2)+20, maxY/2+2); err != nil {
+	if view, err := ui.SetView("Oh nuts!", (maxX/2)-20, maxY/2, (maxX/2)+20, maxY/2+20); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		fmt.Fprintf(view, "We have a peanut! --> %q", err)
+		fmt.Fprintf(view, "We have a peanut! --> %q\n", err)
+		fmt.Fprintf(view, "Ctrl-Q to quit.\n")
 	}
 	return nil
 }
@@ -134,4 +135,5 @@ func main() {
 	// Startup the main loop
 	err = ui.MainLoop()
 	cli.ExitOnError(app.Eout, err, false)
+	ui.Reset()
 }
