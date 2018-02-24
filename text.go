@@ -1,6 +1,6 @@
 //
 // text.go implements a text structure and function for building
-// an text editor functionality independent of UI.
+// a text editor functionality independent of UI.
 //
 package nuts
 
@@ -36,7 +36,7 @@ type Document struct {
 	// Meta is a map to any additional data associated with the text, e.g. File Info, DOI content, etc.
 	Meta map[string]interface{}
 	// Cursor holds the document level cursor (byte count into document)
-	Cursor int64
+	Cursor int
 	// Source holds an ordered list of Block pointers
 	Source []*Block
 }
@@ -56,11 +56,7 @@ type Block struct {
 	// Source holds the text in a byte slice
 	Source []byte
 	// Cursor holds the location of where to start reading or writing
-	Cursor int64
-}
-
-func len64(o []interface{}) int64 {
-	return int64(len(o))
+	Cursor int
 }
 
 //NOTE: Block holds content in memory. It implements io.Reader and io.Writer
@@ -68,14 +64,14 @@ func len64(o []interface{}) int64 {
 
 // Read copies b.Source into byte slice p up to the size of p
 func (b *Block) Read(p []byte) (int, error) {
-	sizeP := len64(p)
-	sizeSrc := len64(b.Source)
+	sizeP := len(p)
+	sizeSrc := len(b.Source)
 	if b.Cursor == sizeSrc {
 		return 0, io.EOF
 	}
 	n := 0
 	//NOTE: we start reading from Cursor
-	for i := int64(0); i < sizeP && b.Cursor < sizeSrc; i++ {
+	for i := 0; i < sizeP && b.Cursor < sizeSrc; i++ {
 		p[i] = b.Source[b.Cursor]
 		b.Cursor++
 		n++
@@ -85,10 +81,10 @@ func (b *Block) Read(p []byte) (int, error) {
 
 // Write copies the content of p and appends it to b.Source
 func (b *Block) Write(p []byte) (int, error) {
-	sizeP := len64(p)
-	sizeSrc := len64(b.Source)
+	sizeP := len(p)
+	sizeSrc := len(b.Source)
 	n := 0
-	i := int64(0)
+	i := 0
 	// Overwrite our b.Source starting at b.Cursor until we need to
 	// allocate a larger slice
 	for ; i < sizeP && b.Cursor < sizeSrc; i++ {
@@ -106,9 +102,9 @@ func (b *Block) Write(p []byte) (int, error) {
 }
 
 // Seek implements the io.Seeker interface for Block
-func (b *Block) Seek(offset int64, whence int) (int64, error) {
-	newCursor := int64(whence) + offset
-	if newCursor < int64(len(b.Source)) {
+func (b *Block) Seek(offset int, whence int) (int, error) {
+	newCursor := whence + offset
+	if newCursor < len(b.Source) {
 		b.Cursor = newCursor
 		return b.Cursor, nil
 	}
@@ -116,8 +112,8 @@ func (b *Block) Seek(offset int64, whence int) (int64, error) {
 }
 
 // ReadAt implements the io.ReadAt interface for Block
-func (b *Block) ReadAt(p []byte, offset int64) (int, error) {
-	_, err := b.Seek(offset, int(b.Cursor))
+func (b *Block) ReadAt(p []byte, offset int) (int, error) {
+	_, err := b.Seek(offset, b.Cursor)
 	if err != nil {
 		return 0, err
 	}
@@ -125,8 +121,8 @@ func (b *Block) ReadAt(p []byte, offset int64) (int, error) {
 }
 
 // WriteAt implements the io.WriteAt interface for Block
-func (b *Block) WriteAt(p []byte, offset int64) (int, error) {
-	_, err := b.Seek(offset, int(b.Cursor))
+func (b *Block) WriteAt(p []byte, offset int) (int, error) {
+	_, err := b.Seek(offset, b.Cursor)
 	if err != nil {
 		return 0, err
 	}

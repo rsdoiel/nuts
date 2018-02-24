@@ -5,6 +5,8 @@
 
 ## Next
 
++ [ ] Look at TCell and TView packages and see if they fit my needs for this experiment
+
 ## Someday, Maybe
 
 # Research
